@@ -16,18 +16,29 @@ function App() {
     { name: 'landscape', description: 'Fields, farmhouses, waterfalls, and the beauty of nature' },
   ]);
 
+  // initial value of current categories is set to commercial category
   const [currentCategory, setCurrentCategory] = useState(categories[0]);
+
+  // initial value of contactSelected is set to false to prevent contact form from showing initially
+  const [contactSelected, setContactSelected] = useState(false);
   return (
     <div>
       <Nav
           categories={categories}
           setCurrentCategory={setCurrentCategory}
-          currentCategory={currentCategory}>
-      </Nav>
+          currentCategory={currentCategory}
+          contactSelected={contactSelected}
+          setContactSelected={setContactSelected}
+      ></Nav>
       <main>
-        <ContactForm></ContactForm>
-        <Gallery currentCategory={currentCategory}></Gallery>
-        <About></About>
+        {!contactSelected ? (
+          <>
+          <Gallery currentCategory={currentCategory}></Gallery>
+          <About></About>
+          </>
+        ) : (
+          <ContactForm></ContactForm>
+        )}
       </main>
     </div>
   );
