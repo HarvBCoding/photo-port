@@ -22,5 +22,5 @@ describe('Contact is rendering', () => {
         const { getByTestId } = render(<ContactForm />)
         expect(getByTestId('h1tag')).toHaveTextContent('Contact me')
         expect(getByTestId('button')).toHaveTextContent('Submit')
-    });
+    })
 });
