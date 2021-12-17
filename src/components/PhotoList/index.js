@@ -1,7 +1,12 @@
 import React, { useState } from "react";
-// import Modal from '../Modal';
+import Modal from "../Modal";
 
 function PhotoList({ category }) {
+  // manage the current photo state, so that it can be passed as a prop
+  const [currentPhoto, setCurrentPhoto] = useState();
+  // initial state is false b/c the modal shouldn't render until a image is clicked
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [photos] = useState([
     {
       name: "Grocery aisle",
@@ -118,20 +123,29 @@ function PhotoList({ category }) {
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ultricie",
     },
   ]);
+
   // filtering the photos array for the photo's whose category match the current category
   const currentPhotos = photos.filter((photo) => photo.category === category);
 
+  const toggleModal = (image, i) => {
+    // current photo state is updated w/ data retrieved through the click event to add the index: i key/value pair
+    setCurrentPhoto({ ...image, index: i });
+    setIsModalOpen(true);
+  };
+
   return (
     <div>
+      {isModalOpen && <Modal currentPhoto={currentPhoto} />}
       <div className="flex-row">
-          {currentPhotos.map((image, i) => (
-              <img 
-              src={require(`../../assets/small/${category}/${i}.jpg`).default}
-              alt={image.name}
-              className="img-thumbnail mx-1"
-              key={image.name}
-              />
-          ))}
+        {currentPhotos.map((image, i) => (
+          <img
+            src={require(`../../assets/small/${category}/${i}.jpg`).default}
+            alt={image.name}
+            className="img-thumbnail mx-1"
+            onClick={() => toggleModal(image, i)}
+            key={image.name}
+          />
+        ))}
       </div>
     </div>
   );
