@@ -44,5 +44,5 @@ describe('Click Event', () => {
         fireEvent.click(getByText('Close this modal'));
         // assert: expected matcher
         expect(mockToggleModal).toHaveBeenCalledTimes(1);
-    })
+    });
 })
